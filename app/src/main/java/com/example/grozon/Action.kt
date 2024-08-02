@@ -36,9 +36,8 @@ class Action : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
         setContentView(R.layout.action)
 
         val sharedPref = getSharedPreferences("user_details", Context.MODE_PRIVATE)
-
-        val storemail=sharedPref.getString("email",null)
-        val storedname = sharedPref.getString("$storemail:name",null)
+        val email = sharedPref.getString("current_user_email", null) ?: ""
+        val storedname = sharedPref.getString("$email:name","no name")
 
 
 
@@ -56,7 +55,7 @@ class Action : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
 
         val headerView = navaView.getHeaderView(0)
         val nameTextView = headerView.findViewById<TextView>(R.id.nav_header_title)
-        nameTextView.text = "$storemail"
+        nameTextView.text = "$email"
 
         val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav)
 

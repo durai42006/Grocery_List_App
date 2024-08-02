@@ -203,10 +203,11 @@ class SignUp : AppCompatActivity() {
     private fun saveUserDetails(name: String, email: String, password: String, dob:String) {
         val sharedPref = getSharedPreferences("user_details", Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
-        editor.putString("email", email)
+        editor.putString("$email:email", email)
         editor.putString("$email:name", name)
         editor.putString("$email:password", password)
         editor.putString("$email:D.O.B",dob)
+        editor.putString("current_user_email", email)
         Log.d("gova","gova:$name : $password")
         editor.apply()
     }

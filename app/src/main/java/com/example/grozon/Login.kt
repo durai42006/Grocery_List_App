@@ -50,7 +50,7 @@ class Login : AppCompatActivity() {
             if (email.isNotEmpty() && password.isNotEmpty() && isEmailValid && isPasswordValid) {
                 if (verifyUserDetails(email, password))
                 {
-                    saveLoginState(true)
+                    saveLoginState(email,true)
                     val intent = Intent(this, Action::class.java)
                     startActivity(intent)
                     finish()
@@ -157,9 +157,10 @@ class Login : AppCompatActivity() {
         return storedPassword == password
     }
 
-    private fun saveLoginState(isLoggedIn: Boolean) {
+    private fun saveLoginState(email: String,isLoggedIn: Boolean) {
         val sharedPref = getSharedPreferences("user_details", Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
+        editor.putString("current_user_email", email)
         editor.putBoolean("is_logged_in", isLoggedIn)
         editor.apply()
     }
