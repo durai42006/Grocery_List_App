@@ -2,11 +2,7 @@ package com.example.grozon
 
 import CellAdapter
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -24,23 +20,17 @@ import com.itextpdf.layout.Document
 import com.itextpdf.layout.element.Table
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.usermodel.WorkbookFactory
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 
 class DisplayExcel : Fragment() {
 
-    private var fileUri: Uri? = null
-    private var workbook: Workbook? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CellAdapter
     private var numColumns: Int = 0
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            fileUri = Uri.parse(it.getString("fileUri"))
-        }
-    }
+    private var workbook: Workbook? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,14 +39,15 @@ class DisplayExcel : Fragment() {
         val view = inflater.inflate(R.layout.fragment_display_excel, container, false)
 
         recyclerView = view.findViewById(R.id.recyclerView)
-        val exportBtn: Button = view.findViewById(R.id.exportbtn)
         val addRowBtn: Button = view.findViewById(R.id.addRowBtn)
         val addColumnBtn: Button = view.findViewById(R.id.addColumnBtn)
+        val exportBtn: Button = view.findViewById(R.id.exportBtn)
 
-        exportBtn.setOnClickListener {
-            workbook?.let {
-                exportToPDF(it)
-            }
+        // Get the workbook bytes from the arguments
+        val workbookBytes = arguments?.getByteArray("workbook")
+        workbookBytes?.let {
+            workbook = WorkbookFactory.create(ByteArrayInputStream(it))
+            displayExcelFile()
         }
 
         addRowBtn.setOnClickListener {
@@ -65,28 +56,23 @@ class DisplayExcel : Fragment() {
 
         addColumnBtn.setOnClickListener {
             adapter.addColumn()
-            numColumns++ // Update the number of columns in the fragment
-            recyclerView.layoutManager = GridLayoutManager(context, numColumns) // Update the layout manager to the new column count
+            numColumns++
+            recyclerView.layoutManager = GridLayoutManager(context, numColumns)
         }
 
-        fileUri?.let {
-            loadWorkbook(it)
-            displayExcelFile()
+        exportBtn.setOnClickListener {
+            workbook?.let {
+                exportToPDF(it)
+            }
         }
 
         return view
     }
 
-    private fun loadWorkbook(uri: Uri) {
-        val inputStream = activity?.contentResolver?.openInputStream(uri)
-        workbook = WorkbookFactory.create(inputStream)
-        inputStream?.close()
-    }
-
     private fun displayExcelFile() {
         workbook?.let { workbook ->
             val sheet = workbook.getSheetAt(0)
-            numColumns = (sheet.getRow(0)?.lastCellNum ?: 0 ).toInt() // Determine the number of columns
+            numColumns = (sheet.getRow(0)?.lastCellNum ?: 0).toInt()
 
             adapter = CellAdapter(sheet, numColumns)
             recyclerView.layoutManager = GridLayoutManager(context, numColumns)
@@ -149,10 +135,10 @@ class DisplayExcel : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(workbookBytes: ByteArray) =
             DisplayExcel().apply {
                 arguments = Bundle().apply {
-                    // Add arguments if needed
+                    putByteArray("workbook", workbookBytes)
                 }
             }
     }
