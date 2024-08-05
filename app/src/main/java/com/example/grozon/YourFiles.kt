@@ -74,9 +74,11 @@ class YourFiles : Fragment() {
 
     private fun openPdfFile(pdfFile: File) {
         val intent = Intent(context, PdfViewerActivity::class.java)
-        intent.putExtra("pdfFile", pdfFile)
+        intent.putExtra("pdfFilePath", pdfFile.absolutePath) // Pass file path as String
         startActivity(intent)
     }
+
+
 
     companion object {
         @JvmStatic

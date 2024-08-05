@@ -17,9 +17,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        jcenter()
 
     }
 }
+
 
 rootProject.name = "Grozon"
 include(":app")

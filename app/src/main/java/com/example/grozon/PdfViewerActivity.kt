@@ -1,24 +1,24 @@
 package com.example.grozon
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.os.ParcelFileDescriptor
 import androidx.appcompat.app.AppCompatActivity
+import com.github.barteksc.pdfviewer.PDFView
 import java.io.File
 
 class PdfViewerActivity : AppCompatActivity() {
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdf_viewer)
 
-        val pdfWebView: WebView = findViewById(R.id.pdfWebView)
+        val pdfView: PDFView = findViewById(R.id.pdfView)
+        val pdfFilePath = intent.getStringExtra("pdfFilePath")
+        val pdfFile = File(pdfFilePath)
 
-        val pdfFile = intent.getSerializableExtra("pdfFile") as File
-        val pdfUrl = "https://docs.google.com/gview?embedded=true&url=${pdfFile.toURI()}"
-
-        pdfWebView.settings.javaScriptEnabled = true
-        pdfWebView.webViewClient = WebViewClient()
-        pdfWebView.loadUrl(pdfUrl)
+        pdfView.fromFile(pdfFile)
+            .load()
     }
 }
