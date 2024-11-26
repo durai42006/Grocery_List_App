@@ -13,12 +13,10 @@
 
     </string>
 
-    <string name="instruction">Open Grono and navigate to the "Import List" section. Tap on the "Import Excel" button, browse your device, and select the Excel file containing your monthly product list. The app will load and display your list for review.<br/>
-        After importing, you can make any necessary changes to your list. Add new items, update quantities, or remove items you no longer need. Use the intuitive interface to ensure your list is accurate and complete.<br/>
-        Once your list is finalized, navigate to the "Generate PDF" section and tap on the "Create PDF" button. Grono will convert your list into a PDF file. Save the PDF to your device or share it directly from the app.<br/>
+    <string name="instruction">Open Grono and navigate to the "Import List" section. Tap on the "Import Excel" button, browse your device, and select the Excel file containing your monthly product list. The app will load and display your list for review.<br />
+        After importing, you can make any necessary changes to your list. Add new items, update quantities, or remove items you no longer need. Use the intuitive interface to ensure your list is accurate and complete.<br />
+        Once your list is finalized, navigate to the "Generate PDF" section and tap on the "Create PDF" button. Grono will convert your list into a PDF file. Save the PDF to your device or share it directly from the app.<br />
         Use the PDF list as your guide while shopping to ensure you have all the items you need without forgetting anything.</string>
-
-
 
 
     <string name="greeting_2"> Experience the efficiency and convenience of GROZON today!</string>

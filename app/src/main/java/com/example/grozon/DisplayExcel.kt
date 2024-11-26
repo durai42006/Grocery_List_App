@@ -39,7 +39,7 @@ class DisplayExcel : Fragment() {
 
         recyclerView = view.findViewById(R.id.recyclerView)
         val addRowBtn: Button = view.findViewById(R.id.addRowBtn)
-        val addColumnBtn: Button = view.findViewById(R.id.addColumnBtn)
+//        val addColumnBtn: Button = view.findViewById(R.id.addColumnBtn)
         val exportBtn: Button = view.findViewById(R.id.exportBtn)
         val shareBtn: Button = view.findViewById(R.id.shareBtn)
 
@@ -54,11 +54,11 @@ class DisplayExcel : Fragment() {
             adapter.addRow()
         }
 
-        addColumnBtn.setOnClickListener {
-            adapter.addColumn()
-            numColumns++
-            recyclerView.layoutManager = GridLayoutManager(context, numColumns)
-        }
+//        addColumnBtn.setOnClickListener {
+//            adapter.addColumn()
+//            numColumns++
+//            recyclerView.layoutManager = GridLayoutManager(context, numColumns)
+//        }
 
         exportBtn.setOnClickListener {
             workbook?.let {

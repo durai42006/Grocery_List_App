@@ -90,6 +90,7 @@ class Action : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
             R.id.firstFragment->replaceFragment(importExcel())
             R.id.secondFragment->replaceFragment(YourFiles())
             R.id.thirdFragment->replaceFragment(Settings())
+            R.id.fifthFragment->replaceFragment(Help())
             R.id.fourthFragment->handleLogout()
         }
         drawerLayout.closeDrawer(GravityCompat.START)
@@ -97,7 +98,8 @@ class Action : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
     }
 
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+        {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()

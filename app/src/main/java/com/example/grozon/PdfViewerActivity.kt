@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
 import androidx.appcompat.app.AppCompatActivity
+//import com.github.barteksc.pdfviewer.PDFView
 import com.github.barteksc.pdfviewer.PDFView
+
 import java.io.File
 
 class PdfViewerActivity : AppCompatActivity() {

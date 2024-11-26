@@ -6,14 +6,14 @@
 
     <fragment
         android:id="@+id/firstFragment"
-        android:name="com.example.grozon.importExcel"
+        android:name="importExcel"
         android:label="First Fragment"
         tools:layout="@layout/fragment_import_excel">
     </fragment>
 
     <fragment
         android:id="@+id/displayExcelFragment"
-        android:name="com.example.grozon.DisplayExcel"
+        android:name="DisplayExcel"
         android:label="Display Excel" />
 
     <fragment
@@ -22,9 +22,17 @@
         android:label="Second Fragment"
         tools:layout="@layout/fragment_your_files" />
 
+
+
     <fragment
         android:id="@+id/thirdFragment"
         android:name="com.example.grozon.Settings"
         android:label="Third Fragment"
         tools:layout="@layout/fragment_settings"/>
+
+    <fragment
+        android:id="@+id/fifthFragment"
+        android:name="com.example.grozon.Help"
+        android:label="Fourth Fragment"
+        tools:layout="@layout/fragment_help"/>
 </navigation>

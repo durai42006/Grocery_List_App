@@ -4,9 +4,17 @@ plugins {
 }
 
 
+
 android {
     namespace = "com.example.grozon"
     compileSdk = 34
+
+
+
+        testOptions {
+            unitTests.isIncludeAndroidResources = true
+        }
+
 
     defaultConfig {
         applicationId = "com.example.grozon"
@@ -39,7 +47,7 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
+//    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
@@ -53,19 +61,25 @@ dependencies {
     implementation(libs.androidx.drawerlayout)
 //    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
-    implementation("com.github.bumptech.glide:glide:4.12.0")
-    implementation("com.github.bumptech.glide:okhttp3-integration:4.12.0")
+    implementation(libs.glide)
+    implementation(libs.okhttp3.integration)
 
-    implementation ("com.github.barteksc:android-pdf-viewer:2.8.2")
+//    implementation (libs.android.pdf.viewer)
+//    implementation ("com.github.barteksc:android-pdf-viewer:3.2.0-beta.1")
+    implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.1")
 
 
-    implementation("com.airbnb.android:lottie:3.4.0")
+
+    implementation(libs.lottie)
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
 
 //    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 //    implementation("de.codecrafters.tableview:tableview:2.8.0")
+
+    implementation("androidx.core:core-ktx:1.12.0")
+
 
 
     implementation(libs.itext7.core)
@@ -79,6 +93,9 @@ dependencies {
     implementation ("com.itextpdf:itext7-core:7.1.15")
     implementation ("com.itextpdf:layout:7.1.15")
     implementation ("com.itextpdf:io:7.1.15")
+    implementation ("com.github.barteksc:pdfium-android:1.9.0")
+//    implementation ("com.github.mhiew:android-pdf-viewer:3.2.0-beta.1")
+
 
 
 //    implementation ("androidx.recyclerview:recyclerview:1.3.0")

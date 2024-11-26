@@ -12,7 +12,7 @@
         android:id="@+id/nav_header_image"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:src="@drawable/grozon_bg_3" />
+        android:src="@drawable/pro" />
 
     <TextView
         android:id="@+id/nav_header_title"

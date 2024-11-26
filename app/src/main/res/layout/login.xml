@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/grozon_bg_3"
+    android:background="@drawable/download"
     tools:context=".Login">
     <ImageView
         android:layout_width="100dp"
@@ -21,11 +21,12 @@
         android:fontFamily="cursive"
         android:textSize="40dp"
         android:textStyle="bold"
-        android:textColor="@color/darkGreen"
+        android:textColor="@color/white"
+        android:shadowColor="@color/darkGreen"
+        android:shadowRadius="10"
         android:layout_marginBottom="40dp"
         android:textAlignment="center"
-        android:shadowColor="@color/black"
-        android:shadowRadius="30"
+
         />
 
     <androidx.cardview.widget.CardView
@@ -140,16 +141,21 @@
         android:layout_height="wrap_content"
         android:text="Don't have an account ?"
         android:textSize="15dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:shadowColor="@color/teal_200"
+        android:shadowRadius="30"
+        android:textColor="@color/white"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5sp"
         android:textSize="15sp"
-        android:text="Create"
+        android:text="Signup"
         android:id="@+id/newacc"
-        android:textColor="@color/white"
+        android:textColor="@color/purple_700"
+        android:shadowColor="@color/white"
+        android:shadowRadius="5"
         android:layout_gravity="center"/>
 
     </LinearLayout>

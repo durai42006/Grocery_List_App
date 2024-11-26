@@ -17,6 +17,12 @@
             android:id="@+id/thirdFragment"
             android:icon="@drawable/baseline_settings_24"
             android:title="Settings" />
+
+        <item
+        android:id="@+id/fifthFragment"
+        android:icon="@drawable/baseline_help_24"
+        android:title="Help" />
+
         <item
             android:id="@+id/fourthFragment"
             android:icon="@drawable/baseline_logout_24"
