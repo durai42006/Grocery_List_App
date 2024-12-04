@@ -1,3 +1,5 @@
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,12 +16,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.grozon.R
 import com.itextpdf.kernel.pdf.PdfDocument
 import com.itextpdf.kernel.pdf.PdfWriter
+import com.itextpdf.kernel.xmp.XMPDateTimeFactory.getCurrentDateTime
 import com.itextpdf.layout.Document
 import com.itextpdf.layout.element.Table
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.usermodel.WorkbookFactory
 import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 
@@ -29,8 +31,11 @@ class DisplayExcel : Fragment() {
     private lateinit var adapter: CellAdapter
     private var numColumns: Int = 0
     private var workbook: Workbook? = null
+    private val REQUEST_CODE_SAVE = 2
+
     private var pdfFilePath: String? = null
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,12 +44,12 @@ class DisplayExcel : Fragment() {
 
         recyclerView = view.findViewById(R.id.recyclerView)
         val addRowBtn: Button = view.findViewById(R.id.addRowBtn)
-//        val addColumnBtn: Button = view.findViewById(R.id.addColumnBtn)
-        val exportBtn: Button = view.findViewById(R.id.exportBtn)
+        val saveBtn: Button = view.findViewById(R.id.saveBtn)
         val shareBtn: Button = view.findViewById(R.id.shareBtn)
 
-        // Get the workbook bytes from the arguments
+        // Get the workbook bytes and file path from the arguments
         val workbookBytes = arguments?.getByteArray("workbook")
+        val originalFilePath = arguments?.getString("filePath")
         workbookBytes?.let {
             workbook = WorkbookFactory.create(ByteArrayInputStream(it))
             displayExcelFile()
@@ -54,37 +59,56 @@ class DisplayExcel : Fragment() {
             adapter.addRow()
         }
 
-//        addColumnBtn.setOnClickListener {
-//            adapter.addColumn()
-//            numColumns++
-//            recyclerView.layoutManager = GridLayoutManager(context, numColumns)
-//        }
+        saveBtn.setOnClickListener {
+            workbook?.let { updatedWorkbook ->
+                // Save dynamically to user-selected location
+                val timestamp = getCurrentDateTime().toString()
+                val pdfFileName = "output_$timestamp.xlsx"
+                val defaultFileName = originalFilePath?.substringAfterLast("/") ?: "${pdfFileName}.xlsx"
 
-        exportBtn.setOnClickListener {
-            workbook?.let {
-                exportToPDF(it)
-            }
+                val saveIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    putExtra(Intent.EXTRA_TITLE, defaultFileName)
+                }
+                startActivityForResult(saveIntent, REQUEST_CODE_SAVE)
+
+                // Save a uniquely named copy to app storage
+                saveToAppStorage("${pdfFileName}", updatedWorkbook)
+            } ?: Toast.makeText(context, "Workbook is not loaded.", Toast.LENGTH_SHORT).show()
         }
 
-        shareBtn.setOnClickListener {
-            pdfFilePath?.let { path ->
-                sharePDF(path)
+
+        shareBtn.setOnClickListener{
+            workbook?.let {
+                exportToPDF(it)
             }
         }
 
         return view
     }
 
-    private fun displayExcelFile() {
-        workbook?.let { workbook ->
-            val sheet = workbook.getSheetAt(0)
-            numColumns = (sheet.getRow(0)?.lastCellNum ?: 0).toInt()
 
-            adapter = CellAdapter(sheet, numColumns)
-            recyclerView.layoutManager = GridLayoutManager(context, numColumns)
-            recyclerView.adapter = adapter
+    private fun saveToAppStorage(fileName: String, workbook: Workbook): String? {
+        // Ensure the file has a .xlsx extension
+        val sanitizedFileName = if (fileName.endsWith(".xlsx")) fileName else "$fileName.xlsx"
+        val appInternalFile = File(requireContext().getExternalFilesDir(null), sanitizedFileName)
+
+        return try {
+            FileOutputStream(appInternalFile).use { outputStream ->
+                workbook.write(outputStream) // Save workbook in Excel format
+            }
+            Toast.makeText(context, "File saved to app storage: ${appInternalFile.absolutePath}", Toast.LENGTH_SHORT).show()
+            appInternalFile.absolutePath
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(context, "Failed to save file to app storage.", Toast.LENGTH_SHORT).show()
+            null
         }
     }
+
+
+
 
     private fun exportToPDF(workbook: Workbook) {
         val timestamp = System.currentTimeMillis().toString()
@@ -97,8 +121,11 @@ class DisplayExcel : Fragment() {
         val externalPath = "${Environment.getExternalStorageDirectory().absolutePath}/Download/$pdfFileName"
         saveWorkbookAsPDF(workbook, externalPath)
 
-        Toast.makeText(activity, "PDF exported to $appInternalPath and $externalPath", Toast.LENGTH_LONG).show()
+        sharePDF(pdfFilePath!!)
+
+        //Toast.makeText(activity, "PDF exported to $appInternalPath and $externalPath", Toast.LENGTH_LONG).show()
     }
+
 
     private fun saveWorkbookAsPDF(workbook: Workbook, filePath: String) {
         val pdfWriter = PdfWriter(FileOutputStream(filePath))
@@ -131,9 +158,14 @@ class DisplayExcel : Fragment() {
         pdfDocument.close()
     }
 
+
     private fun sharePDF(filePath: String) {
         val file = File(filePath)
-        val uri: Uri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.provider", file)
+        val uri: Uri = FileProvider.getUriForFile(
+            requireContext(),
+            "${requireContext().packageName}.provider",
+            file
+        )
 
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             type = "application/pdf"
@@ -143,15 +175,50 @@ class DisplayExcel : Fragment() {
 
         startActivity(Intent.createChooser(shareIntent, "Share PDF using"))
     }
-    companion object {
-        @JvmStatic
-        fun newInstance(workbookBytes: ByteArray): DisplayExcel {
-            return DisplayExcel().apply {
-                arguments = Bundle().apply {
-                    putByteArray("workbook", workbookBytes)
+
+
+
+
+        private fun displayExcelFile() {
+        workbook?.let { workbook ->
+            val sheet = workbook.getSheetAt(0)
+            numColumns = (sheet.getRow(0)?.lastCellNum ?: 0).toInt()
+
+            adapter = CellAdapter(sheet, numColumns)
+            recyclerView.layoutManager = GridLayoutManager(context, numColumns)
+            recyclerView.adapter = adapter
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_SAVE && resultCode == Activity.RESULT_OK) {
+            val uri = data?.data
+            if (uri != null) {
+                try {
+                    requireContext().contentResolver.openOutputStream(uri)?.use { outputStream ->
+                        workbook?.write(outputStream)
+                    }
+                    Toast.makeText(context, "File saved successfully!", Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Toast.makeText(context, "Failed to save the file.", Toast.LENGTH_SHORT).show()
                 }
+            } else {
+                Toast.makeText(context, "Failed to retrieve file path.", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
+    companion object {
+        @JvmStatic
+        fun newInstance(workbookBytes: ByteArray, filePath: String): DisplayExcel {
+            return DisplayExcel().apply {
+                arguments = Bundle().apply {
+                    putByteArray("workbook", workbookBytes)
+                    putString("filePath", filePath)
+                }
+            }
+        }
+    }
 }

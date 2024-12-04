@@ -68,8 +68,11 @@ class importExcel : Fragment() {
                 workbook.write(outputStream)
                 val workbookBytes = outputStream.toByteArray()
 
-                // Correctly create the DisplayExcel fragment
-                val fragment = DisplayExcel.newInstance(workbookBytes)
+                // Extract file name or file path
+                val filePath = uri.path ?: "ImportedFile.xlsx"
+
+                // Correctly create the DisplayExcel fragment with filePath
+                val fragment = DisplayExcel.newInstance(workbookBytes, filePath)
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.fragment_container, fragment)
                     ?.addToBackStack(null)
@@ -81,6 +84,7 @@ class importExcel : Fragment() {
             }
         }
     }
+
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         context?.let { it1 -> ContextCompat.checkSelfPermission(it1, it) } == PackageManager.PERMISSION_GRANTED
