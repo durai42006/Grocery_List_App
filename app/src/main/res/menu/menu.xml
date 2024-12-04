@@ -5,14 +5,7 @@
 
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/firstFragment"
-            android:icon="@drawable/baseline_file_upload_24"
-            android:title="Import File" />
-        <item
-            android:id="@+id/secondFragment"
-            android:icon="@drawable/baseline_folder_24"
-            android:title="Your Files" />
+
         <item
             android:id="@+id/thirdFragment"
             android:icon="@drawable/baseline_settings_24"

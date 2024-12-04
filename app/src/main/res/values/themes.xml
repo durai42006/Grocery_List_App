@@ -8,14 +8,8 @@
         <item name="colorPrimary">@color/teal_700</item>
         <item name="colorPrimaryVariant">@color/red</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="android:textColor">@color/black</item>
 
-        <!--        Secondary brand color-->
-<!--        <item name="colorSecondary">@color/teal_200</item>-->
-<!--        <item name="colorSecondaryVariant">@color/teal_700</item>-->
-<!--        <item name="colorOnSecondary">@color/black</item>-->
-
-<!--        status bar color-->
-<!--        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>-->
     </style>
 
     <style name="Theme.Grozon" parent="Base.Theme.Grozon" />
@@ -24,9 +18,9 @@
         <item name="colorAccent">@android:color/white</item>
     </style>
 
-<!--    <style name="ScreenBackground"><item name="android:background">@color/white</item></style>-->
-<!--    <style name="CardBackground"><item name="android:background">@color/white</item></style>-->
-<!--    <style name="TextColor"><item name="android:textColor">@color/lavender</item></style>-->
-<!--    <style name="ImageChange"><item name="android:src">@drawable/grozon</item></style>-->
+    <style name="Nav" parent="Theme.AppCompat">
+        <item name="background">@color/white</item>
+    </style>
+
 
 </resources>

@@ -14,4 +14,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="lavender">#8692F7</color>
     <color name="darkGrey">#FF424242</color>
-</resources>
+        <color name="color1">#FFCDD2</color>  <!-- Light Red -->
+        <color name="color2">#C8E6C9</color>  <!-- Light Green -->
+        <color name="color3">#BBDEFB</color><!-- Light Blue -->
+    <color name="color4">#98FB98</color>
+    </resources>

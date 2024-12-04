@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.core.content.ContextCompat
 import java.io.File
 
 class YourFiles : Fragment() {
@@ -20,9 +21,6 @@ class YourFiles : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            // Handle arguments if needed
-        }
     }
 
     override fun onCreateView(
@@ -49,6 +47,13 @@ class YourFiles : Fragment() {
     inner class PdfFileAdapter(private val pdfFiles: List<File>) :
         RecyclerView.Adapter<PdfFileAdapter.PdfFileViewHolder>() {
 
+        // List of colors for backgrounds (modify as per your requirement)
+        private val colors = listOf(
+            R.color.color4, // Example color
+            R.color.color2, // Another color
+              // Another color
+        )
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PdfFileViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_file, parent, false)
             return PdfFileViewHolder(view)
@@ -57,6 +62,11 @@ class YourFiles : Fragment() {
         override fun onBindViewHolder(holder: PdfFileViewHolder, position: Int) {
             val pdfFile = pdfFiles[position]
             holder.pdfFileName.text = pdfFile.name
+
+            // Set a background color for each item based on position
+            val backgroundColor = ContextCompat.getColor(holder.itemView.context, colors[position % colors.size])
+            holder.itemContainer.setBackgroundColor(backgroundColor)
+
             holder.openPdfBtn.setOnClickListener {
                 openPdfFile(pdfFile)
             }
@@ -69,6 +79,7 @@ class YourFiles : Fragment() {
         inner class PdfFileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val pdfFileName: TextView = itemView.findViewById(R.id.pdfFileName)
             val openPdfBtn: Button = itemView.findViewById(R.id.openPdfBtn)
+            val itemContainer: View = itemView.findViewById(R.id.itemContainer) // The root view to change background
         }
     }
 
@@ -77,8 +88,6 @@ class YourFiles : Fragment() {
         intent.putExtra("pdfFilePath", pdfFile.absolutePath) // Pass file path as String
         startActivity(intent)
     }
-
-
 
     companion object {
         @JvmStatic

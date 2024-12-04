@@ -14,6 +14,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.grozon.databinding.ActionBinding
 import com.google.android.material.navigation.NavigationView
 import importExcel
 
@@ -21,14 +22,31 @@ class Action : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
 
     private lateinit var drawerLayout: DrawerLayout
 
+    private  lateinit var binding: ActionBinding
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActionBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.action)
+        setContentView(binding.root)
 
-        val sharedPref = getSharedPreferences("user_details", Context.MODE_PRIVATE)
+
+
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> replaceFragment(Home())
+                R.id.nav_import -> replaceFragment(importExcel())
+                R.id.nav_files -> replaceFragment(YourFiles())
+                else -> false
+            }
+            true
+        }
+
+
+
+        val sharedPref = getSharedPreferences("user_details", MODE_PRIVATE)
         val email = sharedPref.getString("current_user_email", null) ?: ""
         val storedname = sharedPref.getString("$email:name","no name")
 
@@ -57,8 +75,8 @@ class Action : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
 
 
         if (savedInstanceState == null) {
-            replaceFragment(importExcel())
-            navaView.setCheckedItem(R.id.firstFragment)
+            replaceFragment(Home())
+            navaView.setCheckedItem(R.id.nav_home)
         }
     }
 
@@ -72,7 +90,7 @@ class Action : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
 
     private fun handleLogout() {
         // Clear login state
-        val sharedPref = getSharedPreferences("user_details", Context.MODE_PRIVATE)
+        val sharedPref = getSharedPreferences("user_details", MODE_PRIVATE)
         with(sharedPref.edit()) {
             putBoolean("is_logged_in", false)
             apply()
@@ -87,8 +105,6 @@ class Action : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.firstFragment->replaceFragment(importExcel())
-            R.id.secondFragment->replaceFragment(YourFiles())
             R.id.thirdFragment->replaceFragment(Settings())
             R.id.fifthFragment->replaceFragment(Help())
             R.id.fourthFragment->handleLogout()

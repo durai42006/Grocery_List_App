@@ -82,22 +82,7 @@ class Login : AppCompatActivity() {
                         Toast.makeText(this@Login, "Password required", Toast.LENGTH_SHORT).show()
                         false
                     }
-                    st.length < 8 -> {
-                        Toast.makeText(this@Login, "Password must contain 8 characters", Toast.LENGTH_SHORT).show()
-                        false
-                    }
-                    !st.matches(Regex(".*[a-z].*")) -> {
-                        Toast.makeText(this@Login, "Password must contain small letters", Toast.LENGTH_SHORT).show()
-                        false
-                    }
-                    !st.matches(Regex(".*[A-Z].*")) -> {
-                        Toast.makeText(this@Login, "Password must contain capital letters", Toast.LENGTH_SHORT).show()
-                        false
-                    }
-                    !st.matches(Regex(".*[!@#$%^&*(),.?:{}|<>].*")) -> {
-                        Toast.makeText(this@Login, "Password must contain special characters", Toast.LENGTH_SHORT).show()
-                        false
-                    }
+
                     else -> true
                 }
             }

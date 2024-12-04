@@ -8,6 +8,9 @@ plugins {
 android {
     namespace = "com.example.grozon"
     compileSdk = 34
+    viewBinding {
+        enable = true
+    }
 
 
 
@@ -35,6 +38,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -67,6 +71,12 @@ dependencies {
 //    implementation (libs.android.pdf.viewer)
 //    implementation ("com.github.barteksc:android-pdf-viewer:3.2.0-beta.1")
     implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.1")
+
+    implementation ("org.apache.poi:poi-ooxml:5.2.3")
+    implementation ("com.itextpdf:itextpdf:5.5.13.3")
+    implementation ("com.itextpdf:itext7-core:7.2.3")
+
+
 
 
 

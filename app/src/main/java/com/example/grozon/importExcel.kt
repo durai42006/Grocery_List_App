@@ -38,11 +38,11 @@ class importExcel : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_import_excel, container, false)
 
-        val importBtn: Button = view.findViewById(R.id.importbtn)
-
-        importBtn.setOnClickListener {
-            importExcelFile()
-        }
+//        val importBtn: Button = view.findViewById(R.id.importbtn)
+        importExcelFile()
+//        importBtn.setOnClickListener {
+//
+//        }
 
         return view
     }
