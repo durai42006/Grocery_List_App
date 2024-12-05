@@ -18,4 +18,7 @@
         <color name="color2">#C8E6C9</color>  <!-- Light Green -->
         <color name="color3">#BBDEFB</color><!-- Light Blue -->
     <color name="color4">#98FB98</color>
+    <color name="boobathi">#a6acaf</color>
+    <color name="aru">#6FCCFFCC</color>
+    <color name="gov">#C9CCFFCC</color>
     </resources>

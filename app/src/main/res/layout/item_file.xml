@@ -5,19 +5,24 @@
     android:orientation="horizontal"
     android:padding="16dp"
     android:id="@+id/itemContainer"
-    android:layout_marginBottom="10dp"> <!-- Optional, for margin between items -->
+    android:layout_marginBottom="10dp"
+    android:divider="@android:color/darker_gray"
+    android:dividerHeight="1dp"> <!-- Optional, for margin between items -->
 
-<TextView
-android:id="@+id/pdfFileName"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:layout_weight="1"
-android:text="PDF File Name"
-android:textSize="16sp" />
+    <TextView
+        android:id="@+id/pdfFileName"
+        android:layout_width="0dp"
+        android:layout_marginRight="15dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="PDF File Name"
+        />
 
-<Button
-android:id="@+id/openPdfBtn"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Open" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/openPdfBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open" />
+
+
+</LinearLayout>

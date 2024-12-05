@@ -24,5 +24,6 @@
     <string name="profile">User</string>
 
     <string name="passdesc">Strong password include numbers,letters and special characters</string>
+    <string name="title_activity_external_viewer">ExternalViewerActivity</string>
 
 </resources>

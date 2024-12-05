@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,6 +17,11 @@
         android:theme="@style/Theme.Grozon"
         tools:targetApi="31">
         <activity
+            android:name=".ExternalViewerActivity"
+            android:exported="false"
+            android:label="@string/title_activity_external_viewer"
+            android:theme="@style/Theme.Grozon" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -21,13 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login"></activity>
-        <activity android:name=".Action"></activity>
-        <activity android:name=".SignUp"></activity>
-        <activity android:name=".ForgotPass"></activity>
-        <activity android:name=".PdfViewerActivity"></activity>
-        <activity android:name=".ResetPassword"></activity>
-
+        <activity android:name=".Login" />
+        <activity android:name=".Action" />
+        <activity android:name=".SignUp" />
+        <activity android:name=".ForgotPass" />
+        <activity android:name=".PdfViewerActivity" />
+        <activity android:name=".ResetPassword" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -41,15 +49,5 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
-
-
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
-
 </manifest>

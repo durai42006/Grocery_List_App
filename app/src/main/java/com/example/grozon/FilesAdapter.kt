@@ -12,11 +12,11 @@ import java.io.File
 class FilesAdapter(private val files: List<File>, private val clickListener: (File) -> Unit) : RecyclerView.Adapter<FilesAdapter.FileViewHolder>() {
 
     // List of predefined background colors (customize the colors here)
-    private val colors = listOf(
-        R.color.color1, // Light Red
-        R.color.color2, // Light Green
-        R.color.color3  // Light Blue
-    )
+//    private val colors = listOf(
+//        R.color.boobathi, // Light Red
+//        R.color.darkGrey, // Light Green
+////        R.color.color3  // Light Blue
+//    )
 
     inner class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val fileNameTextView: TextView = itemView.findViewById(R.id.pdfFileName)
@@ -34,10 +34,10 @@ class FilesAdapter(private val files: List<File>, private val clickListener: (Fi
         holder.fileNameTextView.text = file.name
 
         // Retrieve the background color from the predefined list
-        val backgroundColor = ContextCompat.getColor(holder.itemView.context, colors[position % colors.size])
+//        val backgroundColor = ContextCompat.getColor(holder.itemView.context, colors[position % colors.size])
 
         // Set the background color for each item in the list
-        holder.itemContainer.setBackgroundColor(backgroundColor)
+//        holder.itemContainer.setBackgroundColor(backgroundColor)
 
         // Set click listener for opening the PDF file
         holder.openPdfButton.setOnClickListener {
@@ -49,4 +49,3 @@ class FilesAdapter(private val files: List<File>, private val clickListener: (Fi
         return files.size
     }
 }
-
