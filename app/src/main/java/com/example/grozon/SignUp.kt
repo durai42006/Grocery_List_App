@@ -209,6 +209,8 @@ class SignUp : AppCompatActivity() {
         editor.putString("$email:D.O.B",dob)
         editor.putString("current_user_email", email)
         Log.d("gova","gova:$name : $password")
+
+
         editor.apply()
     }
 

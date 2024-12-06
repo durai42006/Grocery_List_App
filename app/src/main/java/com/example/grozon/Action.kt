@@ -1,5 +1,6 @@
 package com.example.grozon
 
+import ProfileDialogFragment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -105,6 +106,7 @@ class Action : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
+            R.id.nav_edit_profile->replaceFragment(ProfileDialogFragment())
             R.id.thirdFragment->replaceFragment(Settings())
             R.id.fifthFragment->replaceFragment(Help())
             R.id.fourthFragment->handleLogout()

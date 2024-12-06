@@ -1,51 +1,39 @@
 package com.example.grozon
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.BaseAdapter
 import java.io.File
 
-class FilesAdapter(private val files: List<File>, private val clickListener: (File) -> Unit) : RecyclerView.Adapter<FilesAdapter.FileViewHolder>() {
+class FilesAdapter(
+    private val context: Context,
+    private val files: List<File>,
+    private val clickListener: (File) -> Unit
+) : BaseAdapter() {
 
-    // List of predefined background colors (customize the colors here)
-//    private val colors = listOf(
-//        R.color.boobathi, // Light Red
-//        R.color.darkGrey, // Light Green
-////        R.color.color3  // Light Blue
-//    )
+    override fun getCount(): Int = files.size
 
-    inner class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val fileNameTextView: TextView = itemView.findViewById(R.id.pdfFileName)
-        val openPdfButton: Button = itemView.findViewById(R.id.openPdfBtn)
-        val itemContainer: View = itemView.findViewById(R.id.itemContainer)  // Root layout container for changing background
-    }
+    override fun getItem(position: Int): Any = files[position]
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_file, parent, false)
-        return FileViewHolder(view)
-    }
+    override fun getItemId(position: Int): Long = position.toLong()
 
-    override fun onBindViewHolder(holder: FileViewHolder, position: Int) {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_file, parent, false)
+
+        val fileNameTextView: TextView = view.findViewById(R.id.pdfFileName)
+        val openPdfButton: Button = view.findViewById(R.id.openPdfBtn)
+
         val file = files[position]
-        holder.fileNameTextView.text = file.name
+        fileNameTextView.text = file.name
 
-        // Retrieve the background color from the predefined list
-//        val backgroundColor = ContextCompat.getColor(holder.itemView.context, colors[position % colors.size])
-
-        // Set the background color for each item in the list
-//        holder.itemContainer.setBackgroundColor(backgroundColor)
-
-        // Set click listener for opening the PDF file
-        holder.openPdfButton.setOnClickListener {
+        openPdfButton.setOnClickListener {
             clickListener(file)
         }
-    }
 
-    override fun getItemCount(): Int {
-        return files.size
+        return view
     }
 }

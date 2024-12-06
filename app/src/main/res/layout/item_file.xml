@@ -6,8 +6,8 @@
     android:padding="16dp"
     android:id="@+id/itemContainer"
     android:layout_marginBottom="10dp"
-    android:divider="@android:color/darker_gray"
-    android:dividerHeight="1dp"> <!-- Optional, for margin between items -->
+    
+  > <!-- Optional, for margin between items -->
 
     <TextView
         android:id="@+id/pdfFileName"

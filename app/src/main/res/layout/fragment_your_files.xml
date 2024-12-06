@@ -4,55 +4,101 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".YourFiles">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       >
+
+        <!-- Image Icon for PDF -->
+
         <!-- PDF Heading -->
         <TextView
             android:id="@+id/pdfHeading"
             android:layout_width="match_parent"
-            android:textAlignment="center"
-            android:background="@color/gov"
             android:layout_height="wrap_content"
             android:text="PDF Files"
+            android:paddingLeft="30dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:layout_marginTop="16dp"
-            android:padding="5dp"
-            android:textColor="@android:color/black" />
-
-        <!-- PDF RecyclerView -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/pdfRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/pdfHeading"
-            android:background="@color/aru"
-            android:padding="5dp"
+            android:background="@color/gov"
+            android:textColor="@android:color/black"
             />
 
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/gov"
+            android:src="@drawable/file_16425457"
+            />
+    </FrameLayout>
+
+        <!-- PDF ListView with bottom border -->
+<!--        <androidx.core.widget.NestedScrollView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fillViewport="true">-->
+        <ListView
+            android:id="@+id/pdfListView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp"
+            android:background="@color/aru"
+            android:padding="5dp" />
+
+
+
+<!--        </androidx.core.widget.NestedScrollView>-->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <!-- Excel Heading -->
         <TextView
             android:id="@+id/excelHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Excel Files"
-            android:textSize="18sp"
-            android:padding="5dp"
-            android:textAlignment="center"
             android:textStyle="bold"
+            android:textSize="18sp"
             android:background="@color/gov"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="30dp"/>
 
-        <!-- Excel RecyclerView -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/excelRecyclerView"
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/gov"
+                android:src="@drawable/xl_8361422"
+                />
+        </FrameLayout>
+
+        <!-- Excel ListView with bottom border -->
+
+            <ListView
+            android:id="@+id/excelListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/excelHeading"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp"
             android:background="@color/aru"
             android:padding="5dp" />
+
     </LinearLayout>
+
 
 </FrameLayout>

@@ -24,6 +24,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class DisplayExcel : Fragment() {
 
@@ -35,7 +37,7 @@ class DisplayExcel : Fragment() {
 
     private var pdfFilePath: String? = null
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,8 +64,9 @@ class DisplayExcel : Fragment() {
         saveBtn.setOnClickListener {
             workbook?.let { updatedWorkbook ->
                 // Save dynamically to user-selected location
-                val timestamp = getCurrentDateTime().toString()
-                val pdfFileName = "output_$timestamp.xlsx"
+                val timestamp = System.currentTimeMillis()
+                val timeOnly = SimpleDateFormat("dd-MM HH:mm:ss").format(Date(timestamp))
+                val pdfFileName = "Xl $timeOnly.xlsx"
                 val defaultFileName = originalFilePath?.substringAfterLast("/") ?: "${pdfFileName}.xlsx"
 
                 val saveIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
@@ -110,9 +113,11 @@ class DisplayExcel : Fragment() {
 
 
 
+    @SuppressLint("SimpleDateFormat")
     private fun exportToPDF(workbook: Workbook) {
-        val timestamp = System.currentTimeMillis().toString()
-        val pdfFileName = "output_$timestamp.pdf"
+        val timestamp = System.currentTimeMillis()
+        val timeOnly = SimpleDateFormat("dd-MM HH:mm:ss").format(Date(timestamp))
+        val pdfFileName = "Pdf $timeOnly.pdf"
         val appInternalPath = "${context?.getExternalFilesDir(null)?.absolutePath}/$pdfFileName"
         pdfFilePath = appInternalPath
 

@@ -1,10 +1,22 @@
+
+
+
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp") version "2.0.21-1.0.27" apply false
+        // Make sure this line is included
+
+
 }
 
 
-
+//buildscript{
+//    dependencies {
+//        classpath("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:$version")
+//    }
+//}
 android {
     namespace = "com.example.grozon"
     compileSdk = 34
@@ -77,6 +89,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.credentials)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -131,9 +144,23 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 //    implementation ("com.github.mhiew:android-pdf-viewer:3.2.0-beta.1")
 
+//    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+//    implementation ("com.github.bumptech.glide:glide:4.13.2")
+//    kapt ("com.github.bumptech.glide:compiler:4.13.2")
+
+//    implementation(libs.glide)
+//    implementation (libs.glide.compiler)
+//    implementation (libs.androidx.room.ktx)
+//    implementation (libs.androidx.room.runtime)
+//    ksp(libs.androidx.room.compiler)
+//    ksp ("com.github.bumptech.glide:ksp:4.14.2")
+
+
 
 
 //    implementation ("androidx.recyclerview:recyclerview:1.3.0")
 //    implementation ("com.github.barteksc:android-pdf-viewer:2.8.2")
 
 }
+
